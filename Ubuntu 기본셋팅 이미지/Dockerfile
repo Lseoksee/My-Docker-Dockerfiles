@@ -16,6 +16,7 @@ RUN apt install vim -y
 RUN apt install nano -y
 RUN apt install wget -y
 RUN apt install curl -y
+RUN apt install net-tools -y
 
 # 프로젝트 폴더 구성
 RUN mkdir "/workspace"
