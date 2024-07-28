@@ -18,6 +18,9 @@ RUN apt install wget -y
 RUN apt install curl -y
 RUN apt install net-tools -y
 
+#UTF-8 설정
+ENV LC_ALL=C.utf8
+
 # 프로젝트 폴더 구성
 RUN mkdir "/workspace"
 WORKDIR "/workspace"
