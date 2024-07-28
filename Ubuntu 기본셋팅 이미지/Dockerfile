@@ -16,6 +16,8 @@ RUN apt install vim -y
 RUN apt install nano -y
 RUN apt install wget -y
 RUN apt install curl -y
+RUN apt install tree -y
+RUN apt install screen -y
 RUN apt install net-tools -y
 
 #UTF-8 설정
