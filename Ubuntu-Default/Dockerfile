@@ -1,5 +1,6 @@
 # ubuntu 베이스 이미지 사용
-FROM ubuntu:latest
+ARG BASE_VERSION=latest
+FROM ubuntu:${BASE_VERSION}
 
 LABEL maintainer="da864268@naver.com"
 LABEL description="my-ubuntu"
@@ -18,6 +19,7 @@ RUN apt install wget -y
 RUN apt install curl -y
 RUN apt install tree -y
 RUN apt install screen -y
+RUN apt install zip -y
 RUN apt install net-tools -y
 
 #UTF-8 설정
