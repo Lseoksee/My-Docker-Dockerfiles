@@ -5,22 +5,24 @@ FROM ubuntu:${BASE_VERSION}
 LABEL maintainer="da864268@naver.com"
 LABEL description="my-ubuntu"
 
-# 패키지 업데이트 먼저
-RUN apt update
-RUN apt upgrade -y
+# 패키지 관리자 업데이트 & 패키지 설치 
+RUN apt update && apt upgrade -y && apt install -y \
+sudo \
+git \
+htop \
+vim \
+nano \
+wget \
+curl \
+tree \
+screen \
+zip \
+net-tools \
+mc && \
+apt clean
 
-# 패키지 설치 
-RUN apt install sudo -y
-RUN apt install git -y
-RUN apt install htop -y
-RUN apt install vim -y
-RUN apt install nano -y
-RUN apt install wget -y
-RUN apt install curl -y
-RUN apt install tree -y
-RUN apt install screen -y
-RUN apt install zip -y
-RUN apt install net-tools -y
+#TimeZone 설정
+RUN ln -snf /usr/share/zoneinfo/Asia/Seoul /etc/localtime
 
 #UTF-8 설정
 ENV LC_ALL=C.utf8
