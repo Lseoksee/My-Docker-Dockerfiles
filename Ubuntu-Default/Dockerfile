@@ -7,7 +7,6 @@ LABEL description="my-ubuntu"
 
 # 패키지 관리자 업데이트 & 패키지 설치 
 RUN apt update && apt upgrade -y && apt install -y \
-sudo \
 git \
 htop \
 vim \
