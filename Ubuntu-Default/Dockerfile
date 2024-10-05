@@ -27,5 +27,4 @@ RUN ln -snf /usr/share/zoneinfo/Asia/Seoul /etc/localtime
 ENV LC_ALL=C.utf8
 
 # 프로젝트 폴더 구성
-RUN mkdir "/workspace"
-WORKDIR "/workspace"
+WORKDIR "/root"
