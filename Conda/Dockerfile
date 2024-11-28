@@ -11,12 +11,24 @@ SHELL ["/bin/bash", "-c"]
 RUN apt update && apt upgrade -y && apt install \
 libgl1 libglib2.0-0 -y
 
+
+# Conda 설치를 위해 BuildKit 변수인 TARGETARCH 사용설정
+ARG TARGETARCH
+
 #Conda 설치
 RUN mkdir -p ~/miniconda3 && \
-wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-$(uname -i).sh -O ~/miniconda3/miniconda.sh && \
+# 빌드 환경에 따른 conda 버전 변수 설정
+if [ "${TARGETARCH}" == "amd64" ]; then \
+    export build_arch="x86_64"; \
+elif [ "${TARGETARCH}" == "arm64" ]; then \
+    export build_arch="aarch64"; \
+else \
+    export build_arch="s390x"; \
+fi; \
+wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-"$build_arch".sh -O ~/miniconda3/miniconda.sh && \
 bash ~/miniconda3/miniconda.sh -b -u -p ~/miniconda3 && \
 rm -rf ~/miniconda3/miniconda.sh
-ENV PATH="/home/${USER_NAME}/miniconda3/bin:$PATH"
+ENV PATH="/root/miniconda3/bin:$PATH"
 RUN conda init && source ~/.bashrc
 
 # 프로젝트 폴더 구성
