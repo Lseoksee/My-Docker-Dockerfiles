@@ -14,6 +14,7 @@ libgl1 libglib2.0-0 -y
 
 # CUDA 버전 빌드 변수 추가
 ARG CUDA_VERSION
+ARG BASE_VERSION
 # CUDA_VERSION이 명시되있는 경우 설치
 RUN if ! [ -z "${CUDA_VERSION}" ]; then \
     # CUDA ToolKit 설치
