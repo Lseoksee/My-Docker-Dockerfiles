@@ -25,8 +25,8 @@ RUN if ! [ -z "${CUDA_VERSION}" ]; then \
     rm -rf cuda-keyring_1.0-1_all.deb && \
     # CUDA Toolkit 환경변수 설정
     echo -e "\n\n" >> ~/.bashrc && \
-    echo -e "PATH=/usr/local/cuda/bin:$PATH" >>~/.bashrc && \
-    echo -e "export LD_LIBRARY_PATH=\"/usr/local/cuda/lib64:$LD_LIBRARY_PATH\"" >>~/.bashrc; \
+    echo -e "PATH=/usr/local/cuda/bin:\$PATH" >>~/.bashrc && \
+    echo -e "export LD_LIBRARY_PATH=\"/usr/local/cuda/lib64:\$LD_LIBRARY_PATH\"" >>~/.bashrc; \
 fi
 
 # Conda 설치를 위해 BuildKit 변수인 TARGETARCH 사용설정
@@ -47,7 +47,7 @@ bash ~/miniconda3/miniconda.sh -b -u -p ~/miniconda3 && \
 rm -rf ~/miniconda3/miniconda.sh && \
 # Conda 환경변수 설정
 echo -e "\n\n" >> ~/.bashrc && \
-echo -e "/root/miniconda3/bin:$PATH" >>~/.bashrc && \
+echo -e "/root/miniconda3/bin:\$PATH" >>~/.bashrc && \
 source ~/.bashrc && \
 conda init && source ~/.bashrc
 
