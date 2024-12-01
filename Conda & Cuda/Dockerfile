@@ -17,7 +17,7 @@ ARG CUDA_VERSION
 # CUDA_VERSION이 명시되있는 경우 설치
 RUN if ! [ -z "${CUDA_VERSION}" ]; then \
     # CUDA ToolKit 설치
-    wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu$(${BASE_VERSION} | tr -d '.')/x86_64/cuda-keyring_1.0-1_all.deb && \
+    wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu$(echo "${BASE_VERSION}" | tr -d '.')/x86_64/cuda-keyring_1.0-1_all.deb && \
     dpkg -i cuda-keyring_1.0-1_all.deb && \
     apt-get update && \
     apt-get install cuda-toolkit-${CUDA_VERSION} -y && \
