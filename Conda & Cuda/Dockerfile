@@ -1,5 +1,6 @@
 # ubuntu 베이스 이미지 사용
-FROM da864268/my-ubuntu
+ARG BASE_VERSION=latest
+FROM da864268/my-ubuntu:${BASE_VERSION}
 
 LABEL maintainer="da864268@naver.com"
 LABEL description="Conda"
@@ -11,6 +12,21 @@ SHELL ["/bin/bash", "-c"]
 RUN apt update && apt upgrade -y && apt install \
 libgl1 libglib2.0-0 -y
 
+# CUDA 버전 빌드 변수 추가
+ARG CUDA_VERSION
+# CUDA_VERSION이 명시되있는 경우 설치
+RUN ! [ -z "${CUDA_VERSION}" ]; then \
+    # CUDA ToolKit 설치
+    RUN wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu$(${BASE_VERSION} | tr -d '.')/x86_64/cuda-keyring_1.0-1_all.deb && \
+    dpkg -i cuda-keyring_1.0-1_all.deb && \
+    apt-get update && \
+    apt-get install cuda-toolkit-${CUDA_VERSION} -y && \
+    rm -rf cuda-keyring_1.0-1_all.deb; \
+fi
+
+# CUDA Toolkit 환경변수 설정
+ENV PATH "/usr/local/cuda/bin:$PATH"
+ENV LD_LIBRARY_PATH "/usr/local/cuda/lib64:$LD_LIBRARY_PATH"
 
 # Conda 설치를 위해 BuildKit 변수인 TARGETARCH 사용설정
 ARG TARGETARCH
