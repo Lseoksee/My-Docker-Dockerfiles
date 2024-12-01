@@ -44,12 +44,11 @@ else \
 fi; \
 wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-"$build_arch".sh -O ~/miniconda3/miniconda.sh && \
 bash ~/miniconda3/miniconda.sh -b -u -p ~/miniconda3 && \
-rm -rf ~/miniconda3/miniconda.sh && \
+rm -rf ~/miniconda3/miniconda.sh
+
 # Conda 환경변수 설정
-echo -e "\n\n" >> ~/.bashrc && \
-echo -e "/root/miniconda3/bin:\$PATH" >>~/.bashrc && \
-source ~/.bashrc && \
-conda init && source ~/.bashrc
+ENV PATH "/root/miniconda3/bin:$PATH"
+RUN conda init && source ~/.bashrc
 
 # 프로젝트 폴더 구성
 WORKDIR "/root"
