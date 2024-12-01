@@ -47,7 +47,7 @@ bash ~/miniconda3/miniconda.sh -b -u -p ~/miniconda3 && \
 rm -rf ~/miniconda3/miniconda.sh
 
 # Conda 환경변수 설정
-ENV PATH "/root/miniconda3/bin:$PATH"
+ENV PATH="/root/miniconda3/bin:$PATH"
 RUN conda init && source ~/.bashrc
 
 # 프로젝트 폴더 구성
