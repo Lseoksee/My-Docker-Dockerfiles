@@ -21,7 +21,10 @@ mc && \
 apt clean
 
 #TimeZone 설정
-RUN ln -snf /usr/share/zoneinfo/Asia/Seoul /etc/localtime
+ARG DEBIAN_FRONTEND=noninteractive
+ENV TZ=Asia/Seoul
+RUN apt install -y tzdata && \
+ln -snf /usr/share/zoneinfo/Asia/Seoul /etc/localtime
 
 #UTF-8 설정
 ENV LC_ALL=C.utf8

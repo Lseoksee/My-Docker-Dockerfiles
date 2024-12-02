@@ -8,6 +8,9 @@ LABEL description="Conda"
 # bash 로 변경
 SHELL ["/bin/bash", "-c"]
 
+# 작업 폴더를 root 로
+WORKDIR "/"
+
 # 패키지 설치
 RUN apt update && apt upgrade -y && apt install \
 libgl1 libglib2.0-0 -y
@@ -22,12 +25,12 @@ RUN if ! [ -z "${CUDA_VERSION}" ]; then \
     dpkg -i cuda-keyring_1.0-1_all.deb && \
     apt-get update && \
     apt-get install cuda-toolkit-${CUDA_VERSION} -y && \
-    rm -rf cuda-keyring_1.0-1_all.deb && \
-    # CUDA Toolkit 환경변수 설정
-    echo -e "\n\n" >> ~/.bashrc && \
-    echo -e "PATH=/usr/local/cuda/bin:\$PATH" >>~/.bashrc && \
-    echo -e "export LD_LIBRARY_PATH=\"/usr/local/cuda/lib64:\$LD_LIBRARY_PATH\"" >>~/.bashrc; \
+    rm -rf cuda-keyring_1.0-1_all.deb; \
 fi
+
+# CUDA Toolkit 환경변수 설정
+ENV PATH="/usr/local/cuda/bin:$PATH"
+ENV LD_LIBRARY_PATH="/usr/local/cuda/lib64:$LD_LIBRARY_PATH"
 
 # Conda 설치를 위해 BuildKit 변수인 TARGETARCH 사용설정
 ARG TARGETARCH
@@ -42,12 +45,12 @@ elif [ "${TARGETARCH}" == "arm64" ]; then \
 else \
     export build_arch="s390x"; \
 fi; \
-wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-"$build_arch".sh -O ~/miniconda3/miniconda.sh && \
-bash ~/miniconda3/miniconda.sh -b -u -p ~/miniconda3 && \
-rm -rf ~/miniconda3/miniconda.sh
+wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-"$build_arch".sh -O /miniconda.sh && \
+bash /miniconda.sh -b -u -p /miniconda3 && \
+rm -rf /miniconda.sh
 
 # Conda 환경변수 설정
-ENV PATH="/root/miniconda3/bin:$PATH"
+ENV PATH="/miniconda3/bin:$PATH"
 RUN conda init && source ~/.bashrc
 
 # 프로젝트 폴더 구성
