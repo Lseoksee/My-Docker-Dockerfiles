@@ -8,9 +8,6 @@ LABEL description="Conda"
 # bash 로 변경
 SHELL ["/bin/bash", "-c"]
 
-# 작업 폴더를 root 로
-WORKDIR "/"
-
 # 패키지 설치
 RUN apt update && apt upgrade -y && apt install \
 libgl1 libglib2.0-0 -y
@@ -36,7 +33,7 @@ ENV LD_LIBRARY_PATH="/usr/local/cuda/lib64:$LD_LIBRARY_PATH"
 ARG TARGETARCH
 
 #Conda 설치
-RUN mkdir -p ~/miniconda3 && \
+RUN mkdir -p /miniconda3 && \
 # 빌드 환경에 따른 conda 버전 변수 설정
 if [ "${TARGETARCH}" == "amd64" ]; then \
     export build_arch="x86_64"; \
